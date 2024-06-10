@@ -6,6 +6,9 @@ postgres
 mysql/
 mysql
 
+db/
+
+
 .env
 
 # Logs

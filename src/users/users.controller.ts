@@ -35,6 +35,11 @@ export class UsersController {
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
+  
+  @Post("id")
+  updateGamesWon(@Param('id') id: string) {
+    return this.usersService.findOne(+id)
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -44,5 +49,10 @@ export class UsersController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
+  }
+
+  @Get(":email")
+  findByEmail(@Param('email') email: string) {
+    return this.usersService.findOneByEmail(email);
   }
 }

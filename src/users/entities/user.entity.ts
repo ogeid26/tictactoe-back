@@ -2,13 +2,13 @@ import {
   Column,
   DeleteDateColumn,
   Entity,
-  PrimaryGeneratedColumn,
+  ObjectIdColumn
 } from 'typeorm';
 import { Role } from '../../common/enums/rol.enum';
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
+  @ObjectIdColumn()
   id: number;
 
   @Column()
@@ -25,4 +25,13 @@ export class User {
 
   @DeleteDateColumn()
   deletedAt: Date;
+
+  @Column({nullable: true})
+  gamesWon: number
+
+  @Column({nullable: true})
+  gamesLost: number
+
+  @Column({nullable: true})
+  gamesDrawn: number
 }
