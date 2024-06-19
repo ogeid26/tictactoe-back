@@ -17,49 +17,50 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register({ name, email, password }: RegisterDto) {
-    const user = await this.usersService.findOneByEmail(email);
+  async register({ username, password }: RegisterDto) {
+    // const user = await this.usersService.findOneByEmail(email);
+    const user = await this.usersService.findOneByUsername(username);
 
     if (user) {
-      throw new BadRequestException(['email is already taken.']);
+      throw new BadRequestException(['Ese usuario ya existe!']);
     }
 
     await this.usersService.create({
-      name,
-      email,
+      username,
       password: await bcryptjs.hash(password, 10),
+      gamesDrawn: 0,
+      gamesLost: 0,
+      gamesWon: 0,
     });
 
     return {
-      name,
-      email,
+      username,
     };
   }
 
-  async login({ email, password }: LoginDto) {
-    const user = await this.usersService.findByEmailWithPassword(email);
+  async login({ username, password }: LoginDto) {
+    const user = await this.usersService.findByUsernameWithPassword(username);
     if (!user) {
-      throw new UnauthorizedException('email is wrong');
+      throw new UnauthorizedException('Datos incorrectos');
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
     if (!isPasswordValid) {
-      throw new UnauthorizedException('password is wrong');
+      throw new UnauthorizedException('Datos incorrectos');
     }
 
-    const payload = { email: user.email, role: user.role };
+    const payload = { username: user.username, role: user.role };
     const token = await this.jwtService.signAsync(payload);
+    const gamesWon = user.gamesWon;
 
     return {
       token,
-      email,
+      username,
+      gamesWon
     };
   }
 
-  async profile({ email, role }: { email: string; role: string }) {
-    if (role !== 'admin') {
-      throw new UnauthorizedException("you don't have permission"); 
-    }
-    return await this.usersService.findOneByEmail(email);
+  async profile({ username, role }: { username: string; role: string }) {
+    const user = await this.usersService.findOneByUsername(username);
   }
 }

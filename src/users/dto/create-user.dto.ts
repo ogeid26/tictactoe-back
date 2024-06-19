@@ -1,5 +1,7 @@
 export class CreateUserDto {
-  email: string;
+  username: string;
   password: string;
-  name?: string;
+  gamesWon = 0;
+  gamesLost = 0;
+  gamesDrawn = 0;
 }

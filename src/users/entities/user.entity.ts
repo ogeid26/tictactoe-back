@@ -11,10 +11,10 @@ export class User {
   @ObjectIdColumn()
   id: number;
 
-  @Column()
-  name: string;
+  @Column({unique: true, nullable: false})
+  username: string;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ unique: true, nullable: true })
   email: string;
 
   @Column({ nullable: false, select: false })
@@ -26,12 +26,12 @@ export class User {
   @DeleteDateColumn()
   deletedAt: Date;
 
-  @Column({nullable: true})
-  gamesWon: number
+  @Column({type: 'int', default: 0, select: true})
+  gamesWon: number;
 
-  @Column({nullable: true})
-  gamesLost: number
+  @Column({type: 'int', default: 0, select: true})
+  gamesLost: number;
 
-  @Column({nullable: true})
-  gamesDrawn: number
+  @Column({type: 'int', default: 0, select: true})
+  gamesDrawn: number;
 }

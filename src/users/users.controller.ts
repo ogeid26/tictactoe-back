@@ -35,11 +35,6 @@ export class UsersController {
   findOne(@Param('id') id: string) {
     return this.usersService.findOne(+id);
   }
-  
-  @Post("id")
-  updateGamesWon(@Param('id') id: string) {
-    return this.usersService.findOne(+id)
-  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
@@ -51,8 +46,23 @@ export class UsersController {
     return this.usersService.remove(+id);
   }
 
-  @Get(":email")
-  findByEmail(@Param('email') email: string) {
-    return this.usersService.findOneByEmail(email);
+  @Get(":username")
+  findByUsername(@Param("username") username: string) {
+    return this.usersService.findOneByUsername(username);
+  }
+  
+  @Get("gamesWon/:username")
+  findGamesWonByUsername(@Param('username') username: string) {
+    return this.usersService.findGamesWonByUsername(username);
+  }
+
+  @Get("gamesDrawn/:username")
+  findGamesDrawn(@Param('username') username: string) {
+    return this.usersService.findGamesDrawnByUsername(username);
+  }
+
+  @Get("gamesLost/:username")
+  findGamesLosByUsername(@Param('username') username: string) {
+    return this.usersService.findGamesLostByUsername(username);
   }
 }

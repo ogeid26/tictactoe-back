@@ -1,4 +1,7 @@
 export interface UserActiveInterface {
-  email: string;
+  username: string;
   role: string;
+  gamesWon: number;
+  gamesLost: number;
+  gamesDrawn: number;
 }

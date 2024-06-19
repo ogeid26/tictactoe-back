@@ -20,10 +20,41 @@ export class UsersService {
     return this.userRepository.findOneBy({ email });
   }
 
+  findOneByUsername(username: string) {
+    return this.userRepository.findOneBy({ username });
+  }
+
   findByEmailWithPassword(email: string) {
     return this.userRepository.findOne({
       where: { email },
-      select: ['id', 'name', 'email', 'password', 'role'],
+      select: ['id', 'username', 'email', 'password', 'role'],
+    });
+  
+  }
+  findGamesWonByUsername(username: string) {
+    return this.userRepository.findOne({
+      where: { username },
+      select: ['gamesWon'],
+    });
+  }
+
+  findGamesDrawnByUsername(username: string) {
+    return this.userRepository.findOne({
+      where: { username },
+      select: ['gamesDrawn'],
+    });
+  }
+  findGamesLostByUsername(username: string) {
+    return this.userRepository.findOne({
+      where: { username },
+      select: ['gamesLost'],
+    });
+  }
+
+  findByUsernameWithPassword(username: string) {
+    return this.userRepository.findOne({
+      where: { username },
+      select: ['id', 'username', 'email', 'password', 'role'],
     });
   }
 
@@ -33,6 +64,7 @@ export class UsersService {
 
   findOne(id: number) {
     return this.userRepository.findOneBy({ id });
+
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {

@@ -2,8 +2,6 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
-import { BreedsModule } from './breeds/breeds.module';
-import { CatsModule } from './cats/cats.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -44,8 +42,6 @@ import { UsersModule } from './users/users.module';
     //         : null,
     //   },
     }),
-    CatsModule,
-    BreedsModule,
     UsersModule,
     AuthModule,
   ],
