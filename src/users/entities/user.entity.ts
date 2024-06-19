@@ -34,4 +34,14 @@ export class User {
 
   @Column({type: 'int', default: 0, select: true})
   gamesDrawn: number;
+
+  @Column({type: 'int', default: 0, select: true})
+  gamesPlayed: number;
+
+  @Column({  select: true})
+  credential: string;
+
+
+
+
 }

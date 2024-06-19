@@ -4,4 +4,6 @@ export class CreateUserDto {
   gamesWon = 0;
   gamesLost = 0;
   gamesDrawn = 0;
+  gamesPlayed = 0;
+  credential: string;
 }

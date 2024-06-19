@@ -31,6 +31,9 @@ export class AuthService {
       gamesDrawn: 0,
       gamesLost: 0,
       gamesWon: 0,
+      gamesPlayed: 0,
+      credential:"",
+      
     });
 
     return {
