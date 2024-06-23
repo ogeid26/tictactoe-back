@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Patch,
+  Put,
   Post,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
@@ -13,10 +14,11 @@ import { Role } from 'src/common/enums/rol.enum';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersService } from './users.service';
+import { UpdateCredentialDTO } from './dto/update-credential.dto';
 
 @ApiTags('users')
-@ApiBearerAuth()
-@Auth(Role.ADMIN)
+// @ApiBearerAuth()
+// @Auth(Role.ADMIN)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
@@ -46,7 +48,7 @@ export class UsersController {
     return this.usersService.remove(+id);
   }
 
-  @Get(":username")
+  @Get("getUser/:username")
   findByUsername(@Param("username") username: string) {
     return this.usersService.findOneByUsername(username);
   }
@@ -64,5 +66,14 @@ export class UsersController {
   @Get("gamesLost/:username")
   findGamesLosByUsername(@Param('username') username: string) {
     return this.usersService.findGamesLostByUsername(username);
+  }
+  @Get("credential/:username")
+  getCredential(@Param('username') username: string) {
+    return this.usersService.getCredential(username);
+  }
+
+  @Patch('credential/:username')
+  updateCredential(@Body() updateCredential: UpdateCredentialDTO) {
+    return this.usersService.updateCredential(updateCredential);
   }
 }

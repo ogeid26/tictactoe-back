@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
+import { UpdateCredentialDTO } from './dto/update-credential.dto';
 
 @Injectable()
 export class UsersService {
@@ -21,7 +22,11 @@ export class UsersService {
   }
 
   findOneByUsername(username: string) {
-    return this.userRepository.findOneBy({ username });
+    return this.userRepository.findOne({
+      where: {username},
+      select: [ 'gamesWon', 'gamesLost', 'gamesDrawn', 'gamesPlayed', 'credential']
+
+      });
   }
 
   findByEmailWithPassword(email: string) {
@@ -73,5 +78,25 @@ export class UsersService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  getCredential(username: string){
+    return this.userRepository.findOne({
+      where: {username},
+      select: ['credential']
+    });
+  }
+
+  updateCredential(updateCredential: UpdateCredentialDTO)  {
+    const user = this.userRepository.findOne({ 
+      where: { username: updateCredential.username }
+    });
+
+    user.then((user) => {
+      user.credential = updateCredential.credential;
+      this.userRepository.save(user);
+    });
+
+
   }
 }
